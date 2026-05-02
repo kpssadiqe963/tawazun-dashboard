@@ -1,170 +1,207 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Student Dashboard</title>
+  <meta charset="UTF-8">
+  <title>INJAZ Dashboard</title>
+
   <style>
     body {
-      font-family: Arial;
+      font-family: Arial, sans-serif;
       margin: 0;
       background: #f4f6f9;
     }
 
-    /* LOGIN PAGE */
-    #loginPage {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: linear-gradient(to right, #4facfe, #00f2fe);
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
     }
 
-    .login-box {
+    .login-box, .dashboard {
       background: white;
       padding: 30px;
-      width: 300px;
-      border-radius: 10px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      margin-top: 40px;
+    }
+
+    h1 {
       text-align: center;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      color: #2c3e50;
+    }
+
+    .motto {
+      text-align: center;
+      color: gray;
+      margin-bottom: 20px;
     }
 
     input {
-      width: 90%;
-      padding: 10px;
-      margin: 10px 0;
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
     }
 
     button {
-      padding: 10px 20px;
-      background: #4facfe;
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
       border: none;
+      background: #3498db;
       color: white;
+      font-size: 16px;
+      border-radius: 8px;
       cursor: pointer;
-      border-radius: 5px;
     }
 
-    /* DASHBOARD */
-    #dashboardPage {
+    button:hover {
+      background: #2980b9;
+    }
+
+    .section {
+      margin-top: 30px;
+    }
+
+    .section h2 {
+      color: #34495e;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+
+    table th {
+      background: #3498db;
+      color: white;
+    }
+
+    .hidden {
       display: none;
     }
-
-    .header {
-      background: #4facfe;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-
-    .container {
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .card {
-      background: white;
-      width: 220px;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-
-    .indhar { border-top: 5px solid #ff9800; }
-    .ayquna { border-top: 5px solid #4caf50; }
-    .total { border-top: 5px solid #2196f3; }
-
-    h2 {
-      margin: 10px 0;
-    }
-
-    .logout {
-      margin-top: 10px;
-      background: red;
-    }
-
   </style>
 </head>
 
 <body>
 
-<!-- LOGIN PAGE -->
-<div id="loginPage">
-  <div class="login-box">
-    <h2>Student Login</h2>
-    <input type="text" id="username" placeholder="Username"><br>
-    <input type="password" id="password" placeholder="Password"><br>
-    <button onclick="login()">Login</button>
-    <p id="error" style="color:red;"></p>
-  </div>
-</div>
+<div class="container">
 
-<!-- DASHBOARD PAGE -->
-<div id="dashboardPage">
-  <div class="header">
-    <h1 id="name"></h1>
-    <button class="logout" onclick="logout()">Logout</button>
+  <!-- LOGIN -->
+  <div class="login-box" id="loginBox">
+    <h1>INJAZ DASHBOARD</h1>
+    <div class="motto">Academic Bank of Credits</div>
+
+    <input type="text" id="admission" placeholder="Type your Admission Number">
+
+    <button onclick="login()">Go to Dashboard</button>
   </div>
 
-  <div class="container">
-    <div class="card indhar">
-      <h3>Indhar Points</h3>
-      <h2 id="indhar"></h2>
+  <!-- DASHBOARD -->
+  <div class="dashboard hidden" id="dashboard">
+
+    <h1>Welcome</h1>
+    <p><b>Admission Number:</b> <span id="admDisplay"></span></p>
+
+    <!-- Pending -->
+    <div class="section">
+      <h2>Pending Applications</h2>
+      <table id="pendingTable">
+        <tr>
+          <th>Course Code</th>
+          <th>Course Title</th>
+        </tr>
+      </table>
     </div>
 
-    <div class="card ayquna">
-      <h3>Ayquna Points</h3>
-      <h2 id="ayquna"></h2>
+    <!-- Active -->
+    <div class="section">
+      <h2>Active Courses</h2>
+      <table id="activeTable">
+        <tr>
+          <th>Course Code</th>
+          <th>Course Title</th>
+          <th>Credits</th>
+          <th>Start Date</th>
+          <th>Duration</th>
+          <th>End Date</th>
+        </tr>
+      </table>
     </div>
 
-    <div class="card total">
-      <h3>Total Points</h3>
-      <h2 id="total"></h2>
+    <!-- Completed -->
+    <div class="section">
+      <h2>Completed Courses</h2>
+      <table id="completedTable">
+        <tr>
+          <th>Course Code</th>
+          <th>Course Title</th>
+          <th>Credits</th>
+          <th>Completion Date</th>
+        </tr>
+      </table>
     </div>
+
   </div>
+
 </div>
 
 <script>
 
-function login() {
-  var username = document.getElementById("username").value;
-  var password = document.getElementById("password").value;
+const API_URL = "https://script.google.com/macros/s/AKfycbwiT-UZ8AHmXMTyvQThrn6sEeFkVz1Ba8e3eydeJ39xc_Q9EuFXF4ro_Mn01cGob3WIvQ/exec";
 
-  fetch("https://script.google.com/macros/s/AKfycbxwsu7-YGt9SY4j5FsLW4HxXLs6GeSo1Q2mWR5Y_bePhG7h9BPCF9QD6EBwncbwbBj5dg/exec", {
+function login() {
+  let admission = document.getElementById("admission").value;
+
+  fetch(API_URL, {
     method: "POST",
     body: new URLSearchParams({
-      username: username,
-      password: password
+      admission: admission
     })
   })
   .then(res => res.json())
   .then(data => {
+
     if (data.status === "success") {
 
-      // Fill data
-      document.getElementById("name").innerText = "Welcome " + data.name;
-      document.getElementById("indhar").innerText = data.indhar;
-      document.getElementById("ayquna").innerText = data.ayquna;
-      document.getElementById("total").innerText = data.total;
+      document.getElementById("loginBox").classList.add("hidden");
+      document.getElementById("dashboard").classList.remove("hidden");
 
-      // Switch pages
-      document.getElementById("loginPage").style.display = "none";
-      document.getElementById("dashboardPage").style.display = "block";
+      document.getElementById("admDisplay").innerText = admission;
+
+      fillTable("pendingTable", data.pending);
+      fillTable("activeTable", data.active);
+      fillTable("completedTable", data.completed);
 
     } else {
-      document.getElementById("error").innerText = "Invalid Login";
+      alert("No Course Data Found");
     }
+
   });
 }
 
-function logout() {
-  document.getElementById("dashboardPage").style.display = "none";
-  document.getElementById("loginPage").style.display = "flex";
+function fillTable(tableId, rows) {
+  let table = document.getElementById(tableId);
 
-  // Clear inputs
-  document.getElementById("username").value = "";
-  document.getElementById("password").value = "";
+  rows.forEach(r => {
+    let row = table.insertRow();
+
+    r.forEach(cell => {
+      let td = row.insertCell();
+      td.innerText = cell;
+    });
+  });
 }
 
 </script>
