@@ -196,10 +196,7 @@ function login() {
 
   let admission = document.getElementById("admission").value;
 
-  fetch(API_URL, {
-    method: "POST",
-    body: new URLSearchParams({ admission: admission })
-  })
+  fetch(API_URL + "?admission=" + admission)
   .then(res => res.json())
   .then(data => {
 
@@ -216,15 +213,19 @@ function login() {
       fillTable("activeTable", data.active);
       fillTable("completedTable", data.completed);
 
-      loadTop10(data.top10);
       loadIndhar(data.indharReasons);
+      loadTop10(data.top10);
+
     } else {
-      alert("No data found");
+      alert("Invalid Admission Number");
     }
 
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Connection error. Check deployment.");
   });
 }
-
 // Fill tables
 function fillTable(id, rows) {
   let table = document.getElementById(id);
