@@ -168,7 +168,16 @@
         </tr>
       </table>
     </div>
-
+<div class="section">
+  <h2>Reasons for Indhar Points</h2>
+  <table id="indharTable">
+    <tr>
+      <th>Date</th>
+      <th>Reason</th>
+      <th>Indhar</th>
+    </tr>
+  </table>
+</div>
     <!-- Top 10 -->
     <div class="section">
       <h2>Ayquna Top 10</h2>
@@ -208,7 +217,7 @@ function login() {
       fillTable("completedTable", data.completed);
 
       loadTop10(data.top10);
-
+      loadIndhar(data.indharReasons);
     } else {
       alert("No data found");
     }
@@ -254,7 +263,22 @@ function card(title, value) {
     </div>
   `;
 }
+function loadIndhar(data) {
 
+  let table = document.getElementById("indharTable");
+
+  // Clear old rows except header
+  table.innerHTML = table.rows[0].outerHTML;
+
+  data.forEach(r => {
+    let tr = table.insertRow();
+
+    r.forEach(c => {
+      let td = tr.insertCell();
+      td.innerText = c;
+    });
+  });
+}
 // Top 10
 function loadTop10(data) {
 
