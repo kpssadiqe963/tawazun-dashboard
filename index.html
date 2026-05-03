@@ -116,26 +116,42 @@
   <div class="dashboard hidden" id="dashboard">
 
     <!-- Back Button -->
-    <div style="display:flex; justify-content:flex-end; gap:10px; margin-bottom:10px;">
+<div style="
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+  padding-bottom:10px;
+  border-bottom:1px solid #ddd;
+">
 
-  <button onclick="resetPage()" style="
-    background:#f39c12;
-    padding:6px 12px;
-    font-size:14px;
-  ">
-    🔄 Check Another
-  </button>
+  <div>
+    <h2 style="margin:0;">INJAZ Dashboard</h2>
+    <small style="color:gray;">Welcome</small>
+  </div>
 
-  <a href="https://script.google.com/macros/s/AKfycbyq_L8JGziNeCiD3Wm_rJr3R1B-cirCrjVy03DwaeGs-cy-uJlWaGm-T86mvTyY6fJy/exec">
-    <button style="background:#2ecc71; padding:6px 12px; font-size:14px;">
-      ⬅ Back
+  <div style="display:flex; gap:10px;">
+
+    <button onclick="resetPage()" style="
+      background:#f39c12;
+      padding:6px 12px;
+      font-size:14px;
+    ">
+      🔄 Check Another
     </button>
-  </a>
 
-</div>
+    <a href="https://script.google.com/macros/s/AKfycbyq_L8JGziNeCiD3Wm_rJr3R1B-cirCrjVy03DwaeGs-cy-uJlWaGm-T86mvTyY6fJy/exec">
+      <button style="
+        background:#2ecc71;
+        padding:6px 12px;
+        font-size:14px;
+      ">
+        ⬅ Back
+      </button>
+    </a>
 
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-  <h1>Welcome</h1>
+  </div>
+
 </div>
     <p><b>Admission Number:</b> <span id="admDisplay"></span></p>
 
