@@ -124,7 +124,17 @@
       </a>
     </div>
 
-    <h1>Welcome</h1>
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+  <h1>Welcome</h1>
+
+  <button onclick="resetPage()" style="
+    background:#f39c12;
+    padding:6px 12px;
+    font-size:14px;
+  ">
+    🔄 Check Another
+  </button>
+</div>
     <p><b>Admission Number:</b> <span id="admDisplay"></span></p>
 
     <!-- Cards -->
@@ -294,6 +304,42 @@ function loadTop10(data) {
       td.innerText = cell;
     });
   });
+}
+  function resetPage() {
+
+  // Show login, hide dashboard
+  document.getElementById("dashboard").classList.add("hidden");
+  document.getElementById("loginBox").classList.remove("hidden");
+
+  // Clear input
+  document.getElementById("admission").value = "";
+
+  // Clear all tables (optional clean reset)
+  document.getElementById("pendingTable").innerHTML = `
+    <tr><th>Course Code</th><th>Course Title</th></tr>
+  `;
+
+  document.getElementById("activeTable").innerHTML = `
+    <tr>
+      <th>Course Code</th><th>Course Title</th><th>Credits</th>
+      <th>Start Date</th><th>Duration</th><th>End Date</th>
+    </tr>
+  `;
+
+  document.getElementById("completedTable").innerHTML = `
+    <tr>
+      <th>Course Code</th><th>Course Title</th>
+      <th>Credits</th><th>Completion Date</th>
+    </tr>
+  `;
+
+  document.getElementById("indharTable").innerHTML = `
+    <tr><th>Date</th><th>Reason</th><th>Indhar</th></tr>
+  `;
+
+  document.getElementById("top10Table").innerHTML = "";
+
+  document.getElementById("cards").innerHTML = "";
 }
 
 </script>
