@@ -167,8 +167,11 @@ tr:hover {
   <div class="login-box" id="loginBox">
     <h1>TAWAZUN DASHBOARD</h1>
     <div class="motto">AYQUNA, INJAZ, INDHAR</div>
+     <h6>"Should you wish to add a password, please contact Sadiqe Hudawi. Please note that this is an optional security measure and is not mandatory."</h6>
 
     <input type="text" id="admission" placeholder="Type your Admission Number">
+    <input type="password" id="password" placeholder="Enter Password (if set)," 
+style="display:none; margin-top:10px; width:100%;">
     <button onclick="login()" style="width:100%; margin-top:15px;">Go to Dashboard</button>
   </div>
 
@@ -339,6 +342,8 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwiT-UZ8AHmXMTyvQThrn6s
 function login() {
 
   let admission = document.getElementById("admission").value;
+  let passwordInput = document.getElementById("password");
+  let enteredPassword = passwordInput.value;
 
   if (!admission.trim()) {
     alert("Please enter Admission Number");
@@ -352,6 +357,7 @@ function login() {
   })
   .then(data => {
 
+    // 🔥 TEACHER LOGIN (no password needed)
     if (data.status === "teacher") {
 
       document.getElementById("loginBox").classList.add("hidden");
@@ -369,8 +375,18 @@ function login() {
       return;
     }
 
+    // 🔹 STUDENT LOGIN
     if (data.status === "success") {
 
+      // 🔐 PASSWORD CHECK (CORRECT PLACE)
+      if (data.summary.password && data.summary.password !== enteredPassword) {
+
+        passwordInput.style.display = "block";
+        alert("Enter correct password");
+        return;
+      }
+
+      // ✅ LOGIN SUCCESS
       document.getElementById("loginBox").classList.add("hidden");
       document.getElementById("dashboard").classList.remove("hidden");
 
