@@ -167,14 +167,28 @@ tr:hover {
   <div class="login-box" id="loginBox">
     <h1>TAWAZUN DASHBOARD</h1>
     <div class="motto">AYQUNA, INJAZ, INDHAR</div>
-     <h6>"Should you wish to add a password, please contact Sadiqe Hudawi. Please note that this is an optional security measure and is not mandatory."</h6>
+     <h10>"നിങ്ങൾക്ക് പാസ്സ്‌വേർഡ് സെറ്റ് ചെയ്യാൻ താല്പര്യം ഉണ്ടെങ്കിൽ സാദിഖ് ഉസ്താദുമായി ബന്ധപ്പെടുക"</h10>
 
     <input type="text" id="admission" placeholder="Type your Admission Number">
     <input type="password" id="password" placeholder="Enter Password (if set)," 
 style="display:none; margin-top:10px; width:100%;">
     <button onclick="login()" style="width:100%; margin-top:15px;">Go to Dashboard</button>
   </div>
-
+<div id="loadingMsg" style="
+  display:none;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  background:white;
+  padding:20px 30px;
+  border-radius:10px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.2);
+  font-size:18px;
+  z-index:9999;
+">
+  ⏳ Loading data, please wait...
+</div>
   <!-- DASHBOARD -->
   <div class="dashboard hidden" id="dashboard">
 
@@ -185,7 +199,7 @@ style="display:none; margin-top:10px; width:100%;">
       align-items:center;
       padding:15px 20px;
       border-bottom:1px solid #ddd;
-      margin-bottom:20px;
+      margin-bottom:30px;
     ">
 
       <!-- Left -->
@@ -340,8 +354,8 @@ style="display:none; margin-top:10px; width:100%;">
 const API_URL = "https://script.google.com/macros/s/AKfycbwiT-UZ8AHmXMTyvQThrn6sEeFkVz1Ba8e3eydeJ39xc_Q9EuFXF4ro_Mn01cGob3WIvQ/exec";
 
 function login() {
-
   let admission = document.getElementById("admission").value;
+   document.getElementById("loadingMsg").style.display = "block";
   let passwordInput = document.getElementById("password");
   let enteredPassword = passwordInput.value;
 
@@ -356,15 +370,21 @@ function login() {
     return res.json();
   })
   .then(data => {
-
+     document.getElementById("loadingMsg").style.display = "none";
     // 🔥 TEACHER LOGIN (no password needed)
     if (data.status === "teacher") {
+      // 🔐 Teacher password check
+if (data.password && data.password !== enteredPassword) {
 
+  passwordInput.style.display = "block";
+  alert("Enter correct teacher password");
+  return;
+}
       document.getElementById("loginBox").classList.add("hidden");
       document.getElementById("dashboard").classList.remove("hidden");
 
       document.getElementById("admDisplay").innerText = "Class " + data.className;
-
+      
       document.getElementById("cards").style.display = "none";
       document.getElementById("studentSection").style.display = "none";
       document.getElementById("teacherSection").style.display = "block";
@@ -413,6 +433,7 @@ function login() {
   .catch(err => {
     console.error(err);
     alert("Connection error. Check deployment.");
+    document.getElementById("loadingMsg").style.display = "none";
   });
 }
 // Fill tables
