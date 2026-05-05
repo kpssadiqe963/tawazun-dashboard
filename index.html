@@ -283,6 +283,36 @@ tr:hover {
   </div>
 
 </div>
+  <div class="section">
+  <h2>Class Students</h2>
+  <table id="teacherTable">
+    <tr>
+      <th>Admission No</th>
+      <th>Name</th>
+      <th>Active</th>
+      <th>Completed</th>
+      <th>Ayquna</th>
+      <th>Indhar</th>
+      <th>Leave</th>
+    </tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>Minus / Indhar Points</h2>
+  <table id="teacherIndharTable">
+    <tr>
+      <th>Date</th>
+      <th>Admission</th>
+      <th>Name</th>
+      <th>Issue</th>
+      <th>Min</th>
+      <th>Max</th>
+      <th>Repeat</th>
+      <th>Point</th>
+    </tr>
+  </table>
+</div>
 
 <script>
 
@@ -296,12 +326,44 @@ function login() {
   .then(res => res.json())
   .then(data => {
 
+    // 🔥 NEW: Teacher Login
+    if (data.status === "teacher") {
+
+      document.getElementById("loginBox").classList.add("hidden");
+      document.getElementById("dashboard").classList.remove("hidden");
+
+      document.getElementById("admDisplay").innerText = "Class " + data.className;
+
+      // Hide student sections
+      document.getElementById("cards").style.display = "none";
+      document.getElementById("pendingTable").parentElement.style.display = "none";
+      document.getElementById("activeTable").parentElement.style.display = "none";
+      document.getElementById("completedTable").parentElement.style.display = "none";
+      document.getElementById("indharTable").parentElement.style.display = "none";
+      document.getElementById("top10Table").parentElement.style.display = "none";
+
+      // Show teacher data
+      loadTeacherTable(data.students);
+      loadTeacherIndhar(data.indharList);
+
+      return; // 🚨 IMPORTANT (stops student code)
+    }
+
+    // 🔹 EXISTING STUDENT LOGIN (keep as is)
     if (data.status === "success") {
 
       document.getElementById("loginBox").classList.add("hidden");
       document.getElementById("dashboard").classList.remove("hidden");
 
       document.getElementById("admDisplay").innerText = admission;
+
+      // Show student sections again (in case switched)
+      document.getElementById("cards").style.display = "grid";
+      document.getElementById("pendingTable").parentElement.style.display = "block";
+      document.getElementById("activeTable").parentElement.style.display = "block";
+      document.getElementById("completedTable").parentElement.style.display = "block";
+      document.getElementById("indharTable").parentElement.style.display = "block";
+      document.getElementById("top10Table").parentElement.style.display = "block";
 
       loadCards(data.summary);
 
@@ -427,7 +489,13 @@ function loadTop10(data) {
 
   document.getElementById("cards").innerHTML = "";
 }
+function loadTeacherTable(data) {
+  fillTable("teacherTable", data);
+}
 
+function loadTeacherIndhar(data) {
+  fillTable("teacherIndharTable", data);
+}
 </script>
 
 </body>
