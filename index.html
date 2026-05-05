@@ -175,145 +175,163 @@ tr:hover {
   <!-- DASHBOARD -->
   <div class="dashboard hidden" id="dashboard">
 
-    <!-- Back Button -->
-<!-- HEADER -->
-<div style="
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px 20px;
-  border-bottom:1px solid #ddd;
-  margin-bottom:20px;
-">
-
-  <!-- Left side -->
-  <div>
-    <h2 style="margin:0;">Tawazun Dashboard</h2>
-    <p style="margin:3px 0 0 0; color:#555; font-size:14px;">
-      Admission Number: <span id="admDisplay"></span>
-    </p>
-  </div>
-
-  <!-- Right side -->
-  <div style="display:flex; gap:10px;">
-
-    <button onclick="resetPage()" style="
-      background:#f39c12;
-      padding:6px 12px;
-      font-size:14px;
-      border-radius:6px;
-      border:none;
+    <!-- HEADER -->
+    <div style="
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:15px 20px;
+      border-bottom:1px solid #ddd;
+      margin-bottom:20px;
     ">
-      🔄 Check Another
-    </button>
 
-    <a href="https://script.google.com/macros/s/AKfycbyq_L8JGziNeCiD3Wm_rJr3R1B-cirCrjVy03DwaeGs-cy-uJlWaGm-T86mvTyY6fJy/exec">
-      <button style="
-        background:#2ecc71;
-        padding:6px 12px;
-        font-size:14px;
-        border-radius:6px;
-        border:none;
-      ">
-        ⬅ Back to Portal
-      </button>
-    </a>
+      <!-- Left -->
+      <div>
+        <h2 style="margin:0;">Tawazun Dashboard</h2>
+        <p style="margin:3px 0 0 0; color:#555; font-size:14px;">
+          Admission Number: <span id="admDisplay"></span>
+        </p>
+      </div>
 
-  </div>
+      <!-- Right -->
+      <div style="display:flex; gap:10px;">
+        <button onclick="resetPage()" style="
+          background:#f39c12;
+          padding:6px 12px;
+          font-size:14px;
+          border-radius:6px;
+          border:none;
+        ">
+          🔄 Check Another
+        </button>
 
-</div>
+        <a href="https://script.google.com/macros/s/AKfycbyq_L8JGziNeCiD3Wm_rJr3R1B-cirCrjVy03DwaeGs-cy-uJlWaGm-T86mvTyY6fJy/exec">
+          <button style="
+            background:#2ecc71;
+            padding:6px 12px;
+            font-size:14px;
+            border-radius:6px;
+            border:none;
+          ">
+            ⬅ Back to Portal
+          </button>
+        </a>
+      </div>
+
+    </div>
 
     <!-- Cards -->
     <div id="cards"></div>
 
-    <!-- Pending -->
-    <div class="section">
-      <h2>Pending Applications</h2>
-      <table id="pendingTable">
-        <tr>
-          <th>Course Code</th>
-          <th>Course Title</th>
-        </tr>
-      </table>
+    <!-- STUDENT SECTION -->
+    <div id="studentSection">
+
+      <!-- Pending -->
+      <div class="section">
+        <h2>Pending Applications</h2>
+        <table id="pendingTable">
+          <tr>
+            <th>Course Code</th>
+            <th>Course Title</th>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Active -->
+      <div class="section">
+        <h2>Active Courses</h2>
+        <table id="activeTable">
+          <tr>
+            <th>Course Code</th>
+            <th>Course Title</th>
+            <th>Credits</th>
+            <th>Start Date</th>
+            <th>Duration</th>
+            <th>End Date</th>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Completed -->
+      <div class="section">
+        <h2>Completed Courses</h2>
+        <table id="completedTable">
+          <tr>
+            <th>Course Code</th>
+            <th>Course Title</th>
+            <th>Credits</th>
+            <th>Completion Date</th>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Indhar -->
+      <div class="section">
+        <h2>Reasons for Indhar Points</h2>
+        <table id="indharTable">
+          <tr>
+            <th>Date</th>
+            <th>Reason</th>
+            <th>Indhar</th>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Top 10 -->
+      <div class="section">
+        <h2>Ayquna Top 10</h2>
+        <table id="top10Table"></table>
+      </div>
+
     </div>
 
-    <!-- Active -->
-    <div class="section">
-      <h2>Active Courses</h2>
-      <table id="activeTable">
-        <tr>
-          <th>Course Code</th>
-          <th>Course Title</th>
-          <th>Credits</th>
-          <th>Start Date</th>
-          <th>Duration</th>
-          <th>End Date</th>
-        </tr>
-      </table>
-    </div>
+    <!-- 🔥 TEACHER SECTION (MOVED INSIDE DASHBOARD) -->
+    <div id="teacherSection" class="hidden">
 
-    <!-- Completed -->
-    <div class="section">
-      <h2>Completed Courses</h2>
-      <table id="completedTable">
-        <tr>
-          <th>Course Code</th>
-          <th>Course Title</th>
-          <th>Credits</th>
-          <th>Completion Date</th>
-        </tr>
-      </table>
-    </div>
-<div class="section">
-  <h2>Reasons for Indhar Points</h2>
-  <table id="indharTable">
-    <tr>
-      <th>Date</th>
-      <th>Reason</th>
-      <th>Indhar</th>
-    </tr>
-  </table>
-</div>
-    <!-- Top 10 -->
-    <div class="section">
-      <h2>Ayquna Top 10</h2>
-      <table id="top10Table"></table>
+      <!-- Search -->
+      <div class="section">
+        <h2>Search Student</h2>
+        <input type="text" id="searchInput" placeholder="Search by name..." onkeyup="searchTable()" style="margin-bottom:10px;">
+      </div>
+
+      <!-- Students -->
+      <div class="section">
+        <h2>Class Students</h2>
+        <table id="teacherTable">
+          <tr>
+            <th>Admission No</th>
+            <th>Name</th>
+            <th>Active</th>
+            <th>Completed</th>
+            <th>Ayquna</th>
+            <th>Indhar</th>
+            <th>Leave</th>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Indhar List -->
+      <div class="section">
+        <h2>Minus / Indhar Points</h2>
+        <table id="teacherIndharTable">
+          <tr>
+            <th>Date</th>
+            <th>Admission</th>
+            <th>Name</th>
+            <th>Issue</th>
+            <th>Min</th>
+            <th>Max</th>
+            <th>Repeat</th>
+            <th>Point</th>
+          </tr>
+        </table>
+      </div>
+
     </div>
 
   </div>
 
 </div>
-  <div class="section">
-  <h2>Class Students</h2>
-  <table id="teacherTable">
-    <tr>
-      <th>Admission No</th>
-      <th>Name</th>
-      <th>Active</th>
-      <th>Completed</th>
-      <th>Ayquna</th>
-      <th>Indhar</th>
-      <th>Leave</th>
-    </tr>
-  </table>
-</div>
-
-<div class="section">
-  <h2>Minus / Indhar Points</h2>
-  <table id="teacherIndharTable">
-    <tr>
-      <th>Date</th>
-      <th>Admission</th>
-      <th>Name</th>
-      <th>Issue</th>
-      <th>Min</th>
-      <th>Max</th>
-      <th>Repeat</th>
-      <th>Point</th>
-    </tr>
-  </table>
-</div>
-
 <script>
 
 const API_URL = "https://script.google.com/macros/s/AKfycbwiT-UZ8AHmXMTyvQThrn6sEeFkVz1Ba8e3eydeJ39xc_Q9EuFXF4ro_Mn01cGob3WIvQ/exec";
@@ -322,11 +340,18 @@ function login() {
 
   let admission = document.getElementById("admission").value;
 
+  if (!admission.trim()) {
+    alert("Please enter Admission Number");
+    return;
+  }
+
   fetch(API_URL + "?admission=" + admission)
-  .then(res => res.json())
+  .then(res => {
+    if (!res.ok) throw new Error("Network error");
+    return res.json();
+  })
   .then(data => {
 
-    // 🔥 NEW: Teacher Login
     if (data.status === "teacher") {
 
       document.getElementById("loginBox").classList.add("hidden");
@@ -334,22 +359,16 @@ function login() {
 
       document.getElementById("admDisplay").innerText = "Class " + data.className;
 
-      // Hide student sections
       document.getElementById("cards").style.display = "none";
-      document.getElementById("pendingTable").parentElement.style.display = "none";
-      document.getElementById("activeTable").parentElement.style.display = "none";
-      document.getElementById("completedTable").parentElement.style.display = "none";
-      document.getElementById("indharTable").parentElement.style.display = "none";
-      document.getElementById("top10Table").parentElement.style.display = "none";
+      document.getElementById("studentSection").style.display = "none";
+      document.getElementById("teacherSection").style.display = "block";
 
-      // Show teacher data
       loadTeacherTable(data.students);
       loadTeacherIndhar(data.indharList);
 
-      return; // 🚨 IMPORTANT (stops student code)
+      return;
     }
 
-    // 🔹 EXISTING STUDENT LOGIN (keep as is)
     if (data.status === "success") {
 
       document.getElementById("loginBox").classList.add("hidden");
@@ -357,13 +376,9 @@ function login() {
 
       document.getElementById("admDisplay").innerText = admission;
 
-      // Show student sections again (in case switched)
       document.getElementById("cards").style.display = "grid";
-      document.getElementById("pendingTable").parentElement.style.display = "block";
-      document.getElementById("activeTable").parentElement.style.display = "block";
-      document.getElementById("completedTable").parentElement.style.display = "block";
-      document.getElementById("indharTable").parentElement.style.display = "block";
-      document.getElementById("top10Table").parentElement.style.display = "block";
+      document.getElementById("studentSection").style.display = "block";
+      document.getElementById("teacherSection").style.display = "none";
 
       loadCards(data.summary);
 
@@ -462,6 +477,8 @@ function loadTop10(data) {
   // Clear input
   document.getElementById("admission").value = "";
 
+  document.getElementById("teacherSection").style.display = "none";
+  document.getElementById("studentSection").style.display = "block";
   // Clear all tables (optional clean reset)
   document.getElementById("pendingTable").innerHTML = `
     <tr><th>Course Code</th><th>Course Title</th></tr>
@@ -495,6 +512,16 @@ function loadTeacherTable(data) {
 
 function loadTeacherIndhar(data) {
   fillTable("teacherIndharTable", data);
+}
+  function searchTable() {
+  let input = document.getElementById("searchInput").value.toLowerCase();
+  let rows = document.querySelectorAll("#teacherTable tr");
+
+  rows.forEach((row, i) => {
+    if (i === 0) return;
+    let name = row.cells[1].innerText.toLowerCase();
+    row.style.display = name.includes(input) ? "" : "none";
+  });
 }
 </script>
 
