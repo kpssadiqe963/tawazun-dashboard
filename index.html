@@ -155,7 +155,42 @@ tr:hover {
 .hidden {
   display: none;
 }
+@media screen and (max-width: 768px) {
 
+  .container {
+    padding:10px;
+  }
+
+  .dashboard,
+  .login-box {
+    padding:20px;
+    margin-top:20px;
+  }
+
+  h1 {
+    font-size:32px;
+  }
+
+  h2 {
+    font-size:24px;
+  }
+
+  table {
+    display:block;
+    overflow-x:auto;
+    white-space:nowrap;
+  }
+
+  button {
+    width:100%;
+    margin-top:10px;
+  }
+
+  #cards {
+    grid-template-columns:1fr 1fr;
+  }
+
+}
 </style>
 </head>
 
@@ -236,8 +271,9 @@ tr:hover {
       <div>
         <h2 style="margin:0;">Tawazun Dashboard</h2>
         <p style="margin:3px 0 0 0; color:#555; font-size:14px;">
-          Admission Number: <span id="admDisplay"></span>
-        </p>
+  Welcome, <span id="studentName"></span><br>
+  Admission Number: <span id="admDisplay"></span>
+</p>
       </div>
 
       <!-- Right -->
@@ -441,7 +477,7 @@ if (
       document.getElementById("dashboard").classList.remove("hidden");
 
       document.getElementById("admDisplay").innerText = admission;
-
+      document.getElementById("studentName").innerText = data.summary.name;
       document.getElementById("cards").style.display = "grid";
       document.getElementById("studentSection").style.display = "block";
       document.getElementById("teacherSection").style.display = "none";
@@ -468,20 +504,41 @@ if (
 }
 // Fill tables
 function fillTable(id, rows) {
+
   let table = document.getElementById(id);
 
-  // clear old rows except header
-  table.innerHTML = table.rows[0].outerHTML;
+  let header = table.rows[0].outerHTML;
+  table.innerHTML = header;
+
+  // 🔥 No data
+  if (!rows || rows.length === 0) {
+
+    let colCount = table.rows[0].cells.length;
+
+    table.innerHTML += `
+      <tr>
+        <td colspan="${colCount}" style="
+          padding:15px;
+          color:#777;
+          font-style:italic;
+        ">
+          No data found
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
 
   rows.forEach(r => {
     let tr = table.insertRow();
+
     r.forEach(c => {
       let td = tr.insertCell();
       td.innerText = c;
     });
   });
 }
-
 // Cards
 function loadCards(data) {
 
