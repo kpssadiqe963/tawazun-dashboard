@@ -169,9 +169,39 @@ tr:hover {
     <div class="motto">AYQUNA, INJAZ, INDHAR</div>
      <h10>"നിങ്ങൾക്ക് പാസ്സ്‌വേർഡ് സെറ്റ് ചെയ്യാൻ താല്പര്യം ഉണ്ടെങ്കിൽ സാദിഖ് ഉസ്താദുമായി ബന്ധപ്പെടുക"</h10>
 
-    <input type="text" id="admission" placeholder="Type your Admission Number">
-    <input type="password" id="password" placeholder="Enter Password (if set)," 
-style="display:none; margin-top:10px; width:100%;">
+    <input type="text"
+       id="admission"
+       placeholder="Type your Admission Number"
+       style="width:100%; box-sizing:border-box;">
+   <div style="
+  position:relative;
+  width:100%;
+  margin-top:15px;
+  box-sizing:border-box;
+">
+
+  <input type="password"
+         id="password"
+         placeholder="Password (leave blank if not set)"
+         style="
+           width:100%;
+           box-sizing:border-box;
+           padding-right:45px;
+         ">
+
+  <span onclick="togglePassword()" style="
+    position:absolute;
+    right:15px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    user-select:none;
+    font-size:18px;
+  ">
+    👁️
+  </span>
+
+</div>
     <button onclick="login()" style="width:100%; margin-top:15px;">Go to Dashboard</button>
   </div>
 <div id="loadingMsg" style="
@@ -374,12 +404,13 @@ function login() {
     // 🔥 TEACHER LOGIN (no password needed)
     if (data.status === "teacher") {
       // 🔐 Teacher password check
-if (data.password && data.password !== enteredPassword) {
-
-  passwordInput.style.display = "block";
-  alert("Enter correct teacher password");
-  return;
-}
+	if (
+  		data.password &&
+  	String(data.password).trim() !== String(enteredPassword).trim()
+	) {
+  	alert("Incorrect teacher password");
+ 	 return;
+	}
       document.getElementById("loginBox").classList.add("hidden");
       document.getElementById("dashboard").classList.remove("hidden");
 
@@ -397,15 +428,14 @@ if (data.password && data.password !== enteredPassword) {
 
     // 🔹 STUDENT LOGIN
     if (data.status === "success") {
-
-      // 🔐 PASSWORD CHECK (CORRECT PLACE)
-      if (data.summary.password && data.summary.password !== enteredPassword) {
-
-        passwordInput.style.display = "block";
-        alert("Enter correct password");
-        return;
-      }
-
+	// 🔐 Password check
+if (
+  data.summary.password &&
+  String(data.summary.password).trim() !== String(enteredPassword).trim()
+) {
+  alert("Incorrect password");
+  return;
+}
       // ✅ LOGIN SUCCESS
       document.getElementById("loginBox").classList.add("hidden");
       document.getElementById("dashboard").classList.remove("hidden");
@@ -505,43 +535,24 @@ function loadTop10(data) {
     });
   });
 }
-  function resetPage() {
+function resetPage() {
 
-  // Show login, hide dashboard
+  // Clear inputs
+  document.getElementById("admission").value = "";
+  document.getElementById("password").value = "";
+
+  // Hide dashboard
   document.getElementById("dashboard").classList.add("hidden");
+
+  // Show login
   document.getElementById("loginBox").classList.remove("hidden");
 
-  // Clear input
-  document.getElementById("admission").value = "";
-
+  // Reset sections
   document.getElementById("teacherSection").style.display = "none";
   document.getElementById("studentSection").style.display = "block";
-  // Clear all tables (optional clean reset)
-  document.getElementById("pendingTable").innerHTML = `
-    <tr><th>Course Code</th><th>Course Title</th></tr>
-  `;
 
-  document.getElementById("activeTable").innerHTML = `
-    <tr>
-      <th>Course Code</th><th>Course Title</th><th>Credits</th>
-      <th>Start Date</th><th>Duration</th><th>End Date</th>
-    </tr>
-  `;
-
-  document.getElementById("completedTable").innerHTML = `
-    <tr>
-      <th>Course Code</th><th>Course Title</th>
-      <th>Credits</th><th>Completion Date</th>
-    </tr>
-  `;
-
-  document.getElementById("indharTable").innerHTML = `
-    <tr><th>Date</th><th>Reason</th><th>Indhar</th></tr>
-  `;
-
-  document.getElementById("top10Table").innerHTML = "";
-
-  document.getElementById("cards").innerHTML = "";
+  // Reset cards
+  document.getElementById("cards").style.display = "grid";
 }
 function loadTeacherTable(data) {
   fillTable("teacherTable", data);
@@ -559,6 +570,16 @@ function loadTeacherIndhar(data) {
     let name = row.cells[1].innerText.toLowerCase();
     row.style.display = name.includes(input) ? "" : "none";
   });
+}
+function togglePassword() {
+
+  let pass = document.getElementById("password");
+
+  if (pass.type === "password") {
+    pass.type = "text";
+  } else {
+    pass.type = "password";
+  }
 }
 </script>
 
