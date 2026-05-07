@@ -451,7 +451,7 @@ function login() {
       document.getElementById("dashboard").classList.remove("hidden");
 
       document.getElementById("admDisplay").innerText = "Class " + data.className;
-      
+      document.getElementById("studentName").innerText = data.teacherName;
       document.getElementById("cards").style.display = "none";
       document.getElementById("studentSection").style.display = "none";
       document.getElementById("teacherSection").style.display = "block";
