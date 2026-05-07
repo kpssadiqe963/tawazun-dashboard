@@ -617,16 +617,36 @@ function loadTeacherTable(data) {
 
 function loadTeacherIndhar(data) {
   fillTable("teacherIndharTable", data);
-}
-  function searchTable() {
-  let input = document.getElementById("searchInput").value.toLowerCase();
-  let rows = document.querySelectorAll("#teacherTable tr");
+}function searchTable() {
 
-  rows.forEach((row, i) => {
+  let input = document.getElementById("searchInput").value.toLowerCase();
+
+  // =========================
+  // 🔹 Student Table
+  // =========================
+
+  let studentRows = document.querySelectorAll("#teacherTable tr");
+
+  studentRows.forEach((row, i) => {
+
     if (i === 0) return;
-    let name = row.cells[1].innerText.toLowerCase();
-    row.style.display = name.includes(input) ? "" : "none";
+
+    let rowText = row.innerText.toLowerCase();
+
+    row.style.display = rowText.includes(input) ? "" : "none";
   });
+	
+  let indharRows = document.querySelectorAll("#teacherIndharTable tr");
+
+  indharRows.forEach((row, i) => {
+
+    if (i === 0) return;
+
+    let rowText = row.innerText.toLowerCase();
+
+    row.style.display = rowText.includes(input) ? "" : "none";
+  });
+
 }
 function togglePassword() {
 
