@@ -600,14 +600,47 @@ function loadTop10(data) {
   table.innerHTML = "";
 
   data.forEach((row, i) => {
+
+    // 🔥 Section Heading (Merged Style)
+    if (
+      row[0] &&
+      !row[1] &&
+      !row[2] &&
+      !row[3] &&
+      !row[4]
+    ) {
+
+      let tr = table.insertRow();
+
+      let td = tr.insertCell();
+
+      td.colSpan = 5;
+
+      td.innerText = row[0];
+
+      td.style.fontWeight = "bold";
+      td.style.fontSize = "20px";
+      td.style.textAlign = "center";
+      td.style.background = "#f1f5f9";
+      td.style.padding = "15px";
+
+      return;
+    }
+
+    // 🔹 Normal Rows
     let tr = table.insertRow();
 
     row.forEach(cell => {
+
       let td = tr.insertCell();
+
       td.innerText = cell;
+
     });
+
   });
 }
+
 function resetPage() {
 
   // Clear inputs
