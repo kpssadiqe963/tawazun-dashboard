@@ -85,27 +85,43 @@ button:hover {
 
 /* Tables */
 table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 15px;
-  overflow: hidden;
-  border-radius: 10px;
+  width:100%;
+  border-collapse:collapse;
+  margin-top:15px;
+  background:white;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+th, td {
+  border:1px solid #e5e7eb;
+  padding:12px;
+  text-align:center;
 }
 
 th {
-  background: linear-gradient(45deg, #3498db, #5dade2);
-  color: white;
-  padding: 12px;
-  font-weight: 500;
+  background:#3498db;
+  color:white;
+  font-weight:700;
+  font-size:16px;
 }
 
 td {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
+  font-size:15px;
+}
+
+tr:nth-child(even) {
+  background:#f9fafb;
 }
 
 tr:hover {
-  background: #f9fbfd;
+  background:#eef6ff;
+}
+
+#top10Table th:first-child,
+#top10Table td:first-child {
+  width:120px;
 }
 
 /* Cards */
@@ -364,6 +380,7 @@ tr:hover {
       <div class="section">
         <h2>Ayquna Top 10</h2>
         <table id="top10Table"></table>
+	
       </div>
 
     </div>
@@ -545,14 +562,13 @@ function loadCards(data) {
   let container = document.getElementById("cards");
 
   container.innerHTML = `
-    ${card("Active Credits", data.activeCredits)}
     ${card("Completed Credits", data.completedCredits)}
     ${card("Ayquna Points", data.ayquna)}
+    ${card("Money Value", "₹" + data.moneyValue)}
     ${card("Indhar Points", data.indhar)}
     ${card("Leave Capacity", data.leave)}
   `;
 }
-
 function card(title, value) {
   return `
     <div class="card">
