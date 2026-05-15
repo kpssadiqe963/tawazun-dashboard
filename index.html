@@ -387,7 +387,28 @@ tr:hover {
 
     <!-- 🔥 TEACHER SECTION (MOVED INSIDE DASHBOARD) -->
     <div id="teacherSection" class="hidden">
+	<div style="
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  margin-bottom:15px;
+">
 
+  <button onclick="exportStudentsPDF()" style="
+    background:#60a5fa;
+    color:white;
+  ">
+    📄 Students PDF
+  </button>
+
+  <button onclick="exportIndharPDF()" style="
+    background:#60a5fa;
+    color:white;
+  ">
+    📄 Indhar PDF
+  </button>
+
+</div>
       <!-- Search -->
       <div class="section">
         <h2>Search Student</h2>
@@ -432,6 +453,10 @@ tr:hover {
   </div>
 
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+
 <script>
 
 const API_URL = "https://script.google.com/macros/s/AKfycbwiT-UZ8AHmXMTyvQThrn6sEeFkVz1Ba8e3eydeJ39xc_Q9EuFXF4ro_Mn01cGob3WIvQ/exec";
@@ -714,6 +739,113 @@ document.getElementById("loginBox").addEventListener("keydown", function(event) 
   }
 
 });
+
+function exportStudentsPDF() {
+
+  const { jsPDF } = window.jspdf;
+
+  const doc = new jsPDF();
+
+  doc.setFontSize(18);
+  doc.text("Class Students Data", 14, 20);
+
+  doc.autoTable({
+    html: '#teacherTable',
+    startY: 30
+  });
+
+  doc.save("Students_Data.pdf");
+}
+
+function exportIndharPDF() {
+
+  let startDate = prompt("Enter Start Date (DD-MM-YYYY)");
+
+  if (!startDate) return;
+
+  const { jsPDF } = window.jspdf;
+
+  const doc = new jsPDF();
+
+  let rows = document.querySelectorAll("#teacherIndharTable tr");
+
+  let body = [];
+
+  rows.forEach((row, index) => {
+
+    // Skip heading row
+    if (index === 0) return;
+
+    let cols = row.querySelectorAll("td");
+
+    if (cols.length === 0) return;
+
+    let rowDate = cols[0].innerText.trim();
+
+    // Compare dates
+    if (isDateGreater(rowDate, startDate)) {
+
+      body.push([
+        cols[0].innerText,
+        cols[1].innerText,
+        cols[2].innerText,
+        cols[3].innerText,
+        cols[4].innerText,
+        cols[5].innerText,
+        cols[6].innerText,
+        cols[7].innerText
+      ]);
+    }
+
+  });
+
+  doc.setFontSize(18);
+  doc.text("Indhar Points Report", 14, 20);
+
+  doc.autoTable({
+    head: [[
+      'Date',
+      'Admission',
+      'Name',
+      'Issue',
+      'Min',
+      'Max',
+      'Repeat',
+      'Point'
+    ]],
+    body: body,
+    startY: 30
+  });
+
+  doc.save("Indhar_Report.pdf");
+}
+
+function isDateGreater(rowDate, startDate) {
+
+  // Convert table date (11-May-2026)
+  function parseRowDate(str) {
+
+    let parts = str.split("-");
+
+    let months = {
+      Jan:0, Feb:1, Mar:2, Apr:3,
+      May:4, Jun:5, Jul:6, Aug:7,
+      Sep:8, Oct:9, Nov:10, Dec:11
+    };
+
+    return new Date(parts[2], months[parts[1]], parts[0]);
+  }
+
+  // Convert user input (01-05-2026)
+  function parseInputDate(str) {
+
+    let parts = str.split("-");
+
+    return new Date(parts[2], parts[1]-1, parts[0]);
+  }
+
+  return parseRowDate(rowDate) >= parseInputDate(startDate);
+}
 </script>
 
 </body>
