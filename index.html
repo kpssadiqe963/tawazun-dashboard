@@ -425,6 +425,7 @@ tr:hover {
             <th>Active</th>
             <th>Completed</th>
             <th>Ayquna</th>
+	    <th>Money Value</th>
             <th>Indhar</th>
             <th>Leave</th>
           </tr>
@@ -458,7 +459,7 @@ tr:hover {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 
 <script>
-
+const UPDATE_MODE = false;
 const API_URL = "https://script.google.com/macros/s/AKfycbwiT-UZ8AHmXMTyvQThrn6sEeFkVz1Ba8e3eydeJ39xc_Q9EuFXF4ro_Mn01cGob3WIvQ/exec";
 
 function login() {
@@ -588,8 +589,15 @@ function loadCards(data) {
 
   container.innerHTML = `
     ${card("Completed Credits", data.completedCredits)}
-    ${card("Ayquna Points", data.ayquna)}
-    ${card("Money Value", "₹" + data.moneyValue)}
+    ${card(
+  "Ayquna Points",
+  UPDATE_MODE ? "Updating..." : data.ayquna
+)}
+
+${card(
+  "Money Value",
+  UPDATE_MODE ? "Updating..." : "₹" + data.moneyValue
+)}
     ${card("Indhar Points", data.indhar)}
     ${card("Leave Capacity", data.leave)}
   `;
@@ -620,7 +628,26 @@ function loadIndhar(data) {
 }
 // Top 10
 function loadTop10(data) {
+  
+if (UPDATE_MODE) {
 
+  let table = document.getElementById("top10Table");
+
+  table.innerHTML = `
+    <tr>
+      <td style="
+        padding:20px;
+        text-align:center;
+        font-weight:bold;
+        font-size:18px;
+      ">
+        Updating...
+      </td>
+    </tr>
+  `;
+
+  return;
+}
   let table = document.getElementById("top10Table");
   table.innerHTML = "";
 
